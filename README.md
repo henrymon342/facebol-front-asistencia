@@ -8,7 +8,12 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 
 
-# PARA REALIZAR UN COMMIT 
+# PARA BAJAR REPOSITORIO DE GIT
 git remote add origin https://github.com/henrymon342/facebol-front-asistencia.git
 git branch -M main
 git push -u origin main
+
+# PARA REALIZAR UN COMMIT
+git add .
+git commit -m "descricion del cambio..."
+git push origin main
