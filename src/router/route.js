@@ -4,10 +4,12 @@ import Home from "../components/Home.vue"
 import MainAdmin from "../components/administrador/MainAdmin.vue"
 import Registro from "../components/administrador/Registro/Registro.vue"
 import Asistencia from "../components/administrador/Asistencia/Asistencia.vue"
+import Clock from "../components/Clock.vue"
+
 
 const routes = [
     {
-        path: '/asd',
+        path: '/login',
         name: 'login',
         component: Login
     },
@@ -30,7 +32,12 @@ const routes = [
         path: '/asistencia',
         name: 'asistencia',
         component: Asistencia
-    }
+    },
+    // {
+    //     path: '/clock',
+    //     name: 'clock',
+    //     component: Clock
+    // }
 ];
 
 export const router = createRouter({
