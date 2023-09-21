@@ -34,6 +34,7 @@
                 <tbody>
                   <tr v-for="(data, i) in horario.data" :key="i">
                     <td> {{ data.llegada }} </td>
+                    <td> {{ data.fecha }} </td>
                     <td> {{ data.codigo }} </td>
                     <td> {{ data.nombre }} </td>
                     <td> {{ data.obs }} </td>
@@ -43,6 +44,7 @@
               </table>
             </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" @click="addData">Adicionar dato</button>
           <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Historial</button>
           <button type="button" class="btn btn-outline-light btn-lg px-4">Generar reporte</button>
         </div>
@@ -69,15 +71,16 @@ export default {
       horario: {
         dias: [
           "hora llegada",
+          "fecha",
           "codigo",
           "nombre",
           "Observación",
         ],
         data: [
-        { llegada: '9:10 am', codigo: 'SIS1709', nombre: 'Pepito Perez', obs: 'Multa: 1 Bs' },
-        { llegada: '9:11 am', codigo: 'SIS1704', nombre: 'Marquito Ortiz', obs: 'Multa: 2 Bs' },
-        { llegada: '9:12 am', codigo: 'SIS1702', nombre: 'Maria Alani', obs: 'Multa: 2 Bs' },
-        { llegada: '9:12 am', codigo: 'SIS1707', nombre: 'Coquito Paredes', obs: 'Multa: 4 Bs' }
+        { llegada: '9:10 am', fecha: '21/09/2023', codigo: 'SIS1709', nombre: 'Pepito Perez', obs: 'Multa: 1 Bs' },
+        { llegada: '9:11 am', fecha: '21/09/2023', codigo: 'SIS1704', nombre: 'Marquito Ortiz', obs: 'Multa: 2 Bs' },
+        { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1702', nombre: 'Maria Alani', obs: 'Multa: 2 Bs' },
+        { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1707', nombre: 'Coquito Paredes', obs: 'Multa: 4 Bs' }
         ]
       },
     };
@@ -104,6 +107,13 @@ export default {
             },
     created () {
       this.countDownTimer()
+    },
+    addData(){
+      const currentDate = new Date().toLocaleString('en-GB',{hour12: false})
+      console.log(currentDate);
+      const date = currentDate.split(',')[0];
+      const timeComing = currentDate.split(',')[1];
+      this.horario.data.push({ llegada: timeComing, fecha: date, codigo: 'SIS1709', nombre: 'Pepito Perez', obs: 'Multa: 1 Bs' })
     }
   },
 };
