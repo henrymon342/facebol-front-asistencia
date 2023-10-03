@@ -77,10 +77,10 @@ export default {
           "Observación",
         ],
         data: [
-        { llegada: '9:10 am', fecha: '21/09/2023', codigo: 'SIS1709', nombre: 'Pepito Perez', obs: 'Multa: 1 Bs' },
-        { llegada: '9:11 am', fecha: '21/09/2023', codigo: 'SIS1704', nombre: 'Marquito Ortiz', obs: 'Multa: 2 Bs' },
-        { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1702', nombre: 'Maria Alani', obs: 'Multa: 2 Bs' },
-        { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1707', nombre: 'Coquito Paredes', obs: 'Multa: 4 Bs' }
+          { llegada: '9:10 am', fecha: '21/09/2023', codigo: 'SIS1709', nombre: 'Pepito Perez', obs: 'Multa: 1 Bs' },
+          { llegada: '9:11 am', fecha: '21/09/2023', codigo: 'SIS1704', nombre: 'Marquito Ortiz', obs: 'Multa: 2 Bs' },
+          { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1702', nombre: 'Maria Alani', obs: 'Multa: 2 Bs' },
+          { llegada: '9:12 am', fecha: '21/09/2023', codigo: 'SIS1707', nombre: 'Coquito Paredes', obs: 'Multa: 4 Bs' }
         ]
       },
     };

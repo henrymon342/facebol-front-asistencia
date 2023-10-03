@@ -19,26 +19,55 @@
         <input
           type="text"
           class="form-control"
-          id="exampleFormControlInput1"
+          id="email"
           placeholder="username@facebol.com"
+          v-model="usuario.email"
         />
       </div>
       <div class="mb-3">
         <input
           type="password"
           class="form-control"
-          id="exampleFormControlInput1"
+          id="password"
           placeholder="password"
+          v-model="usuario.password"
         />
       </div>
       <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button">Entrar</button>
+        <button class="btn btn-primary" @click="login">Entrar</button>
       </div>
     </div>
   </main>
 </template>
 
-<script setup></script>
+<script>
+import axios from 'axios'
+  export default {
+    name: "login",
+    data() {
+      return {
+        usuario: {
+          email: "",
+          password: ""
+        }
+        // email,
+        // password
+      };
+    },
+    methods: {
+      login(){
+        // console.log(this.usuario);
+        axios.post('http://192.168.0.2/asitenback/public/api/v1/usuarios/login', { email: this.usuario.email, password: this.usuario.password }).then((result) => {
+          console.log( result );
+        }).catch((err) => {
+          console.log(err);
+        });
+    },
+    }
+  }
+
+
+</script>
 
 <style scoped>
 main {

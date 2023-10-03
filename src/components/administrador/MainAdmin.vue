@@ -12,17 +12,49 @@
       </div>
     </div>
   </div>
-  <!-- <main class="d-flex justify-content-around y-100"> -->
 
-    <!-- <RouterLink class="btn btn-primary" to="/registro">Registro</RouterLink>
-    <RouterLink class="btn btn-primary" to="/asistencia"
-      >Asistencias</RouterLink
-    > -->
-  <!-- </main> -->
+  <div class="contact">
+    <h1 class="title">Contacto</h1>
+    <form action class="form" @submit.prevent="contact">
+      <label class="form-label" for="#name">Nombre</label>
+      <input
+        v-model="name"
+        class="form-input"
+        type="text"
+        id="name"
+        required
+        placeholder="Nombre"
+      />
+      <label class="form-label" for="#email">Email</label>
+      <input
+        v-model="email"
+        class="form-input"
+        type="text"
+        id="email"
+        placeholder="Email"
+      />
+      <input class="form-submit" type="submit" value="Contactar" />
+    </form>
+  </div>
+
 </template>
 
-<script setup>
+<script >
 import Navbar from "../Navbar.vue";
+
+export default {
+  data: () => ({
+    name: "",
+    email: "",
+  }),
+  methods: {
+    contact() {
+      console.log(this.name);
+      console.log(this.email);
+    },
+  },
+};
+
 </script>
 
 <style scoped></style>

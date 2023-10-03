@@ -5,6 +5,7 @@ import MainAdmin from "../components/administrador/MainAdmin.vue"
 import Registro from "../components/administrador/Registro/Registro.vue"
 import Asistencia from "../components/administrador/Asistencia/Asistencia.vue"
 import Clock from "../components/Clock.vue"
+import Historial from "../components/administrador/Historial/Historial.vue"
 
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
         path: '/asistencia',
         name: 'asistencia',
         component: Asistencia
+    },
+    {
+        path: '/historial',
+        name: 'historial',
+        component: Historial
     },
     // {
     //     path: '/clock',
