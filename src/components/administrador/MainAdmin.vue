@@ -1,19 +1,21 @@
 <template>
-  <Navbar />
-  <div class="bg-dark text-secondary px-4 py-5 text-center h-screen">
-    <div class="py-5">
-      <h1 class="display-5 fw-bold text-white">Dark mode hero</h1>
+  <!-- <Navbar /> -->
+  <div class="bg-dark text-secondary text-center vh-100">
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <h1 class="display-5 fw-bold text-white">Banco de datos Facebol</h1>
       <div class="col-lg-6 mx-auto">
-        <p class="fs-5 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <p class="fs-5 w-5">
+          Sistemas de asistencias para el personal de la empresa Facebol. Aqui puedes registrar al personal en la base de datos, tambien la gestión de asistencia.
+        </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Custom button</button>
-          <button type="button" class="btn btn-outline-light btn-lg px-4">Secondary</button>
+          <router-link type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" to="/asistencia"> Asistencias </router-link>
+          <router-link type="button" class="btn btn-outline-light btn-lg px-4" to="registro">Registros</router-link>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="contact">
+  <!-- <div class="contact">
     <h1 class="title">Contacto</h1>
     <form action class="form" @submit.prevent="contact">
       <label class="form-label" for="#name">Nombre</label>
@@ -35,26 +37,14 @@
       />
       <input class="form-submit" type="submit" value="Contactar" />
     </form>
-  </div>
+  </div> -->
 
 </template>
 
 <script >
-import Navbar from "../Navbar.vue";
-
-export default {
-  data: () => ({
-    name: "",
-    email: "",
-  }),
-  methods: {
-    contact() {
-      console.log(this.name);
-      console.log(this.email);
-    },
-  },
-};
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -6,46 +6,34 @@
         <div class="col-8">
           <div class="row">
             <div class="col-6">
-              <label class="form-label" for="#nombres"
-                >Nombre(s)</label
-              >
+              <label class="form-label" for="#nombres">Nombre(s)</label>
               <input
                 type="text"
                 class="form-control"
-                
                 id="nombres"
                 v-model="form.nombres"
               />
-              <label class="form-label" for="#apellido1"
-                >Apellido 1</label
-              >
+              <label class="form-label" for="#apellido1">Apellido 1</label>
               <input
                 type="text"
                 class="form-control"
-                
                 id="apellidos1"
                 v-model="form.apellido1"
               />
-              <label class="form-label" for="#apellido2"
-                >Apellido 2</label
-              >
+              <label class="form-label" for="#apellido2">Apellido 2</label>
               <input
                 type="text"
                 class="form-control"
-                
                 id="apellidos2"
                 v-model="form.apellido2"
               />
               <div class="row">
                 <div class="col">
-                  <label class="form-label" for="#ci"
-                    >CI</label
-                  >
+                  <label class="form-label" for="#ci">CI</label>
                   <input
                     type="text"
                     class="form-control"
                     id="ci"
-                    
                     v-model="form.ci"
                   />
                   <label class="form-label" for="#fecha"
@@ -53,6 +41,7 @@
                   >
                   <VueDatePicker id="fecha" v-model="form.date"></VueDatePicker>
                 </div>
+
                 <div class="col">
                   <label class="form-label" for="#celular"
                     >Número de Cel.</label
@@ -61,12 +50,18 @@
                     type="text"
                     class="form-control"
                     id="celular"
-                    
                     v-model="form.celular"
                   />
                   <div class=""></div>
                 </div>
               </div>
+              <label class="form-label" for="#direccion">Dirección</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="direccion"
+                    v-model="form.direccion"
+                  />
             </div>
             <div class="col-6">
               <label class="form-label" for="#instituto"
@@ -76,41 +71,50 @@
                 type="text"
                 class="form-control"
                 id="instituto"
-                
                 v-model="form.instituto"
               />
-              <label class="form-label" for="#carrera"
-                >Carrera</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="carrera"
-                
-                v-model="form.carrera"
-              />
-              <label class="form-label" for="#direccion"
-                >Dirección</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="direccion"
-                
-                v-model="form.direccion"
-              />
+
+              <label class="form-label" for="#carrera">Carrera</label>
+              <select class="form-select">
+                <option v-for="(carre, index) in form.carrera" :value="index">
+                  {{ carre.nombre_carrera }}
+                </option>
+              </select>
+
+              <label class="form-label" for="#areas">Áreas</label>
+              <select class="form-select">
+                <option v-for="(area, index) in form.areas" :value="index">
+                  {{ area.nombre_area }}
+                </option>
+              </select>
+
               <label class="form-label" for="#codigo"
-                >Codigo de credencial</label
+                >Generación</label
               >
               <input
                 type="text"
                 class="form-control"
                 id="codigo"
-                
-                v-model="form.codigo"
-                disabled
+                v-model="form.generacion"
+              />
+
+              <label class="form-label" for="#email">Correo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                v-model="form.email"
+              />
+
+              <label class="form-label" for="#password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                v-model="form.password"
               />
             </div>
+
             <div class="col-12">
               <div class="table-responsive">
                 <h5 class="pt-5 pb-3 text-center">Horario</h5>
@@ -177,8 +181,9 @@
             </div>
           </div>
           <div class="flex text-center">
-            
-            <button class="btn btn-primary col-2" type="submit">Registrar</button>
+            <button class="btn btn-primary col-2" type="submit">
+              Registrar
+            </button>
           </div>
         </div>
         <div class="col-4">
@@ -190,12 +195,16 @@
 </template>
 
 <script>
+import axios from "axios";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import UsuarioService from "./../../../services/usuario.service";
 export default {
   name: "registro",
   components: { VueDatePicker },
+  onMounted() {
+    console.log("funcion cuando se inicia el componente!");
+  },
   data() {
     return {
       usuarios: [],
@@ -207,10 +216,12 @@ export default {
         date: null,
         celular: "",
         instituto: "",
-        carrera: "",
+        carrera: [],
+        areas: [],
         direccion: "",
-        codigo: ""
-
+        generacion: "",
+        email: "",
+        password: ""
       },
       date: null,
       horario: {
@@ -242,22 +253,88 @@ export default {
     cambio(estado) {},
     contact() {
       console.log(this.form);
+      console.log(this.horarios);
     },
     getUsuarios() {
       UsuarioService.getAll()
-        .then(response => {
+        .then((response) => {
           this.tutorials = response.data;
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
+    async getCarreras() {
+      try {
+        const carreras = await axios.get(
+          "http://192.168.0.2/asitenback/public/api/v1/carreras"
+        );
+
+        console.log(carreras.data);
+
+        this.form.carrera = carreras.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getAreas() {
+      try {
+        const areas = await axios.get(
+          "http://192.168.0.2/asitenback/public/api/v1/areas"
+        );
+
+        console.log(areas.data);
+        this.form.areas = areas.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getTipoUsuarios() {
+      try {
+        const tipos = await axios.get(
+          "http://192.168.0.2/asitenback/public/api/v1/tipousuarios"
+        );
+
+        console.log(tipos.data);
+        // this.form.tipos = tipos.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getInstitutosUniv() {
+      try {
+        const univins = await axios.get(
+          "http://192.168.0.2/asitenback/public/api/v1/uniins"
+        );
+
+        console.log(univins.data);
+        // this.form.tipos = tipos.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // async getCodigoTarjeta() {
+    //   try {
+    //     const codigoTarjeta = await axios.post(
+    //       "http://192.168.0.2/asitenback/public/api/v1/tarjetas"
+    //     );
+
+    //     console.log(codigoTarjeta.data);
+    //     this.form.codigo = codigoTarjeta.data.id;
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
   },
   mounted() {
     this.getUsuarios();
-  }
-
+    this.getCarreras();
+    this.getAreas();
+    this.getTipoUsuarios();
+    this.getInstitutosUniv();
+    // this.getCodigoTarjeta();
+  },
 };
 </script>
 
