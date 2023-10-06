@@ -1,15 +1,37 @@
 <template>
+
+
+  <button @click="showModal = true">Mostrar Modal</button>
+
+  <Modal v-if="showModal" @closeModal="showModal = false">
+    <h2>Título del Modal</h2>
+    <p>Contenido del modal...</p>
+  </Modal>
+
   <!-- <Navbar /> -->
   <div class="bg-dark text-secondary text-center vh-100">
     <div class="position-absolute top-50 start-50 translate-middle">
       <h1 class="display-5 fw-bold text-white">Banco de datos Facebol</h1>
       <div class="col-lg-6 mx-auto">
         <p class="fs-5 w-5">
-          Sistemas de asistencias para el personal de la empresa Facebol. Aqui puedes registrar al personal en la base de datos, tambien la gestión de asistencia.
+          Sistemas de asistencias para el personal de la empresa Facebol. Aqui
+          puedes registrar al personal en la base de datos, tambien la gestión
+          de asistencia.
         </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <router-link type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" to="/asistencia"> Asistencias </router-link>
-          <router-link type="button" class="btn btn-outline-light btn-lg px-4" to="registro">Registros</router-link>
+          <router-link
+            type="button"
+            class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+            to="/asistencia"
+          >
+            Asistencias
+          </router-link>
+          <router-link
+            type="button"
+            class="btn btn-outline-light btn-lg px-4"
+            to="registro"
+            >Registros</router-link
+          >
         </div>
       </div>
     </div>
@@ -38,13 +60,24 @@
       <input class="form-submit" type="submit" value="Contactar" />
     </form>
   </div> -->
-
 </template>
 
-<script >
+<script>
 
+import Modal from '../modal/Modal.vue';
+
+export default {
+  name: "MainAdmin",
+  components: {
+    Modal,
+  },
+  methods: {},
+  data(){
+    return{
+      showModal: false,
+    }
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

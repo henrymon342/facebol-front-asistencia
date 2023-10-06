@@ -64,39 +64,43 @@
                   />
             </div>
             <div class="col-6">
-              <label class="form-label" for="#instituto"
-                >Intituto o Universidad</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="instituto"
-                v-model="form.instituto"
-              />
+              <label class="form-label" for="#carrera">Universidad o instituto</label>
+              <select class="form-select" v-model="form.instituto">
+                <option v-for="(ins) in uniins" :value="ins.id">
+                  {{ ins.nombre_uniins }}
+                </option>
+              </select>
 
               <label class="form-label" for="#carrera">Carrera</label>
-              <select class="form-select">
-                <option v-for="(carre, index) in form.carrera" :value="index">
+              <select class="form-select" v-model="form.carrera">
+                <option v-for="(carre) in carrerasView" :value="carre.id">
                   {{ carre.nombre_carrera }}
                 </option>
               </select>
 
               <label class="form-label" for="#areas">Áreas</label>
-              <select class="form-select">
-                <option v-for="(area, index) in form.areas" :value="index">
+              <select class="form-select" v-model="form.areas">
+                <option v-for="(area) in areasView" :value="area.id">
                   {{ area.nombre_area }}
                 </option>
               </select>
 
-              <label class="form-label" for="#codigo"
+              <label class="form-label" for="#generacion"
                 >Generación</label
               >
-              <input
-                type="text"
-                class="form-control"
-                id="codigo"
-                v-model="form.generacion"
-              />
+              <select class="form-select" v-model="form.generacion_id">
+                <option v-for="(gen) in generaciones" :value="gen.id">
+                  {{ gen.generacion }}
+                </option>
+              </select>
+
+              <label class="form-label" for="#tiposdeusuario">Tipos de usuario</label>
+              <select class="form-select" v-model="form.tipodeusuario">
+                <option v-for="(type) in usertypes" :value="type.id">
+                  {{ type.tipousuario }}
+                </option>
+              </select>
+
 
               <label class="form-label" for="#email">Correo</label>
               <input
@@ -184,6 +188,9 @@
             <button class="btn btn-primary col-2" type="submit">
               Registrar
             </button>
+            <button class="btn btn-primary col-2" @click="showPopup">
+              modal
+            </button>
           </div>
         </div>
         <div class="col-4">
@@ -191,23 +198,71 @@
         </div>
       </div>
     </form>
+    <!-- <Alert /> -->
   </main>
+
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Show a second modal and hide this one with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Hide this modal and show the first with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+      </div>
+    </div>
+  </div>
+</div>
+<a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
 </template>
+
+
 
 <script>
 import axios from "axios";
 import VueDatePicker from "@vuepic/vue-datepicker";
+import Alert from "../../modal/Alert.vue";
 import "@vuepic/vue-datepicker/dist/main.css";
 import UsuarioService from "./../../../services/usuario.service";
 export default {
   name: "registro",
   components: { VueDatePicker },
   onMounted() {
+    this.myModal = new bootstrap.Modal(document.getElementById('alertPopup'))
     console.log("funcion cuando se inicia el componente!");
   },
   data() {
     return {
       usuarios: [],
+      myModal: {},
+      areasView: "",
+      usertypes: [ 
+        { id: 1, tipousuario: "ADMINISTRADOR" },
+        { id: 2, tipousuario: "PASANTE" }
+      ],
+      uniins: [],
+      carrerasView: "",
+      generaciones: "",
       form: {
         nombres: "",
         apellido1: "",
@@ -216,12 +271,13 @@ export default {
         date: null,
         celular: "",
         instituto: "",
-        carrera: [],
-        areas: [],
+        carrera: "",
+        areas: "",
         direccion: "",
-        generacion: "",
+        generacion_id: "",
         email: "",
-        password: ""
+        password: "",
+        tipodeusuario: ""
       },
       date: null,
       horario: {
@@ -273,7 +329,7 @@ export default {
 
         console.log(carreras.data);
 
-        this.form.carrera = carreras.data;
+        this.carrerasView = carreras.data;
       } catch (e) {
         console.log(e);
       }
@@ -285,7 +341,7 @@ export default {
         );
 
         console.log(areas.data);
-        this.form.areas = areas.data;
+        this.areasView = areas.data;
       } catch (e) {
         console.log(e);
       }
@@ -297,6 +353,7 @@ export default {
         );
 
         console.log(tipos.data);
+        this.usertypes = tipos.data;
         // this.form.tipos = tipos.data;
       } catch (e) {
         console.log(e);
@@ -309,23 +366,28 @@ export default {
         );
 
         console.log(univins.data);
+        this.uniins = univins.data;
         // this.form.tipos = tipos.data;
       } catch (e) {
         console.log(e);
       }
     },
-    // async getCodigoTarjeta() {
-    //   try {
-    //     const codigoTarjeta = await axios.post(
-    //       "http://192.168.0.2/asitenback/public/api/v1/tarjetas"
-    //     );
+    async getGeneraciones() {
+      try {
+        const geners = await axios.get(
+          "http://192.168.0.2/asitenback/public/api/v1/generacions"
+        );
 
-    //     console.log(codigoTarjeta.data);
-    //     this.form.codigo = codigoTarjeta.data.id;
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // },
+        console.log(geners.data);
+        this.generaciones = geners.data;
+        // this.form.tipos = tipos.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    showPopup(){
+      this.myModal.show();
+    }
   },
   mounted() {
     this.getUsuarios();
@@ -333,7 +395,7 @@ export default {
     this.getAreas();
     this.getTipoUsuarios();
     this.getInstitutosUniv();
-    // this.getCodigoTarjeta();
+    this.getGeneraciones();
   },
 };
 </script>
